@@ -7,7 +7,7 @@ const { getNodeAutoInstrumentations } = require("@opentelemetry/auto-instrumenta
 const { OTLPTraceExporter } =  require('@opentelemetry/exporter-trace-otlp-grpc')
 
 const metadata = new grpc.Metadata();
-metadata.set('x-honeycomb-team', 'Dxj8cohO3tE6AifelvEJ8K');
+metadata.set('x-honeycomb-team', process.env.HONEYCOMB_API_KEY);
 
 const sdk = new opentelemetry.NodeSDK({
   resource: new Resource({
