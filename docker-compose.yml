@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./server
+    # volumes:
+    #   - .:/src
+    command: npm run start
+    ports:
+      - "6001:6001"
+    environment:
+      HONEYCOMB_API_KEY: ${HONEYCOMB_API_KEY}
+  nginx:
+      restart: always
+      build:
+          context: ./nginx
+      ports:
+          - "80:80"
+      volumes:
+          - ./logs:/var/log/nginx
+  honeytail:
+    build:
+      context: ./honeytail
+    environment:
+      - HONEYCOMB_WRITE_KEY=${HONEYCOMB_API_KEY}
+      - HONEYCOMB_DATASET="nginx-logs"
+    volumes:
+      - ./logs:/logs:ro
+      - ../nginx/default.conf:/nginx.conf:ro
