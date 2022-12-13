@@ -12,17 +12,15 @@ const tracer = trace.getTracer("node-year.js");
 const app = express();
 
 app.get("/", async (req, res) => {
-
   let activeSpan = trace.getSpan(context.active());
-  activeSpan.setAttribute("hello", "world");
+  activeSpan.setAttribute("request_id", req.headers['x-request-id']);
 
   res.send("Hello World");
 });
 
 app.get("/year", async (req, res) => {
-
   let activeSpan = trace.getSpan(context.active());
-  activeSpan.setAttribute("foo", "bar");
+  activeSpan.setAttribute("request_id", req.headers['x-request-id']);
   doSomeWork();
   const year = await getYear(years);
 

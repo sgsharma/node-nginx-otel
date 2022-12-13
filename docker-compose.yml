@@ -23,7 +23,7 @@ services:
       context: ./honeytail
     environment:
       - HONEYCOMB_WRITE_KEY=${HONEYCOMB_API_KEY}
-      - HONEYCOMB_DATASET="nginx-logs"
+      - HONEYCOMB_DATASET=nginx-logs
     volumes:
       - ./logs:/logs:ro
-      - ../nginx/default.conf:/nginx.conf:ro
+      - ./nginx/nginx.conf:/nginx.conf:ro
